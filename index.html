@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steve Couch | Building tools where technology meets organizing</title>
+  <meta name="description" content="Portfolio of Steve Couch. Technologist turned organizer. Parliamentary procedure software, data pipelines, and five years of elected leadership in a 5,000-member political organization.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf7f2;
+      --cream-dark: #f0ebe4;
+      --text: #2d2926;
+      --text-light: #5c5550;
+      --clay: #b8614e;
+      --clay-light: #d4917f;
+      --sage: #6b7d62;
+      --sage-light: #e8ede5;
+      --rule: #d9d2c9;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Subtle grain texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a {
+      color: var(--clay);
+      text-decoration: none;
+      border-bottom: 1px solid var(--clay-light);
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    a:hover {
+      border-color: var(--clay);
+    }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════
+       HEADER
+    ═══════════════════════════════════ */
+    header {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    header h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    header .tagline {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    nav {
+      margin-top: 32px;
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      border-bottom: none;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--clay);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════
+       SECTIONS (shared)
+    ═══════════════════════════════════ */
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    /* ═══════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════ */
+    .project {
+      margin-bottom: 48px;
+      padding-left: 20px;
+      border-left: 3px solid var(--clay);
+    }
+
+    .project:last-child {
+      margin-bottom: 0;
+    }
+
+    .project h2 a {
+      border-bottom: none;
+      color: var(--text);
+    }
+
+    .project h2 a:hover {
+      color: var(--clay);
+    }
+
+    .project h2 .arrow {
+      font-size: 0.75em;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    .project h2 a:hover .arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    .project ul {
+      margin: 16px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .project li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    .project li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--clay-light);
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .tech-stack span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 3px 10px;
+      border-radius: 3px;
+      background: var(--sage-light);
+      color: var(--sage);
+    }
+
+    /* ═══════════════════════════════════
+       ORGANIZING
+    ═══════════════════════════════════ */
+    .organizing-narrative {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .organizing-narrative strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .highlight {
+      padding: 20px;
+      background: var(--cream-dark);
+      border-radius: 6px;
+    }
+
+    .highlight-label {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--clay);
+      margin-bottom: 6px;
+    }
+
+    .highlight p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-light);
+    }
+
+    /* ═══════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════ */
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .resume-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 20px;
+      background: var(--cream-dark);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      color: var(--text);
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .resume-link:hover {
+      background: var(--sage-light);
+      border-color: var(--sage);
+    }
+
+    /* ═══════════════════════════════════
+       FOOTER / CONTACT
+    ═══════════════════════════════════ */
+    footer {
+      padding: 48px 0 80px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .contact-links a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      border-bottom: 2px solid var(--clay-light);
+    }
+
+    .contact-links a:hover {
+      border-color: var(--clay);
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 600px) {
+      header {
+        padding: 48px 0 40px;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      .highlights {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      .project {
+        padding-left: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ── HEADER ── -->
+    <header>
+      <h1>Steve Couch</h1>
+      <p class="tagline">Building tools where technology meets organizing</p>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#organizing">Organizing</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+      <div class="section-label fade-in">Projects</div>
+
+      <div class="project fade-in">
+        <h2><a href="https://github.com/eudaimonstro/Robbie">Robbie <span class="arrow">&rarr;</span></a></h2>
+        <h3>Parliamentary Procedure Platform</h3>
+        <ul>
+          <li>Real-time collaborative application for conducting meetings under Robert's Rules of Order</li>
+          <li>Live meeting management with role-based views (Chair, Participant, Admin), motion tracking with parliamentary precedence, speaker queue, and voting with quorum enforcement</li>
+          <li>Bylawyer module for version-controlled bylaws with amendment workflows and section-level diffs</li>
+          <li>Born directly from experience running large chapter meetings and conventions</li>
+        </ul>
+        <div class="tech-stack">
+          <span>React</span>
+          <span>TypeScript</span>
+          <span>Node.js</span>
+          <span>Socket.io</span>
+          <span>PostgreSQL</span>
+          <span>Prisma</span>
+          <span>React Native</span>
+        </div>
+      </div>
+
+      <div class="project fade-in">
+        <h2><a href="https://github.com/eudaimonstro/meet_importer">Meet Importer <span class="arrow">&rarr;</span></a></h2>
+        <h3>Sports Data Pipeline</h3>
+        <ul>
+          <li>Production system aggregating 53,000+ athletic results across 845 meets for Naperville Central High School track &amp; cross country</li>
+          <li>Scrapes Athletic.net API, stores in MySQL, exports to Google Sheets for coaches</li>
+          <li>Smart caching, parallel workers, and performance optimization (53x speedup on key operations)</li>
+          <li>96% test coverage across 1,300+ tests</li>
+        </ul>
+        <div class="tech-stack">
+          <span>Python</span>
+          <span>MySQL</span>
+          <span>Google Sheets API</span>
+          <span>pytest</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ORGANIZING ── -->
+    <section id="organizing">
+      <div class="section-label fade-in">Organizing</div>
+
+      <div class="organizing-narrative fade-in">
+        I spent five years in elected leadership of a <strong>5,000-member political advocacy organization</strong> in Los Angeles. I planned conventions, coordinated solidarity efforts with striking public school teachers, built the internal tech tools we needed, and co-led electoral campaigns that changed how an official campaign allocated its resources. The tools I build now come from that experience. I know what organizations actually need because I've been the person in the room who needed them.
+      </div>
+
+      <div class="highlights fade-in">
+        <div class="highlight">
+          <div class="highlight-label">Leadership</div>
+          <p>Elected Recording Secretary on the steering committee, the highest administrative body of the organization. Served as parliamentarian for the 2019 local convention.</p>
+        </div>
+        <div class="highlight">
+          <div class="highlight-label">Strike Support</div>
+          <p>Strike Captain during the UTLA teachers' strike, Winter 2019. Coordinated phone/text banking and managed communications at one of three adopted schools.</p>
+        </div>
+        <div class="highlight">
+          <div class="highlight-label">Electoral</div>
+          <p>Co-led canvassing effort to elect Jackie Goldberg to LAUSD School Board. Identified overlooked pockets of support that shifted the campaign's tactics.</p>
+        </div>
+        <div class="highlight">
+          <div class="highlight-label">Tech &amp; Ops</div>
+          <p>Built a programmatic texting platform, a chapter discussion board, and a ticketing system to streamline workflows for a volunteer-run organization.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+      <div class="section-label fade-in">About</div>
+      <div class="about-text fade-in">
+        I studied government at Harvard, taught special education in Chicago Public Schools, organized in Los Angeles for five years, and now build software for the problems I've seen firsthand. I'm looking for roles where technical skills and organizing experience aren't separate line items. They're the same skill set.
+      </div>
+      <a href="#" class="resume-link fade-in">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V2M4 8l4 4 4-4M2 14h12"/></svg>
+        Resume (PDF)
+      </a>
+    </section>
+
+  </div>
+
+  <!-- ── FOOTER / CONTACT ── -->
+  <footer id="contact">
+    <div class="container">
+      <div class="section-label fade-in">Contact</div>
+      <div class="contact-links fade-in">
+        <a href="mailto:SGCouch1@gmail.com">SGCouch1@gmail.com</a>
+        <a href="https://github.com/eudaimonstro">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scroll fade-in ── -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
